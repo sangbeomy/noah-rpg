@@ -1,0 +1,96 @@
+import type { Chapter } from './types';
+
+// 이야기는 모두 데이터입니다. 새 장면은 여기에 노드를 추가하면 됩니다.
+// 성경 구절은 참조만 표기하고, 내용은 아이들 눈높이의 재구성입니다.
+// next가 없으면 배열의 다음 노드로 넘어갑니다.
+export const chapters: Chapter[] = [
+  {
+    id: 1, title: '하나님의 부탁', verse: '창세기 6장', start: 'start',
+    nodes: [
+      { id: 'start', bg: 0x7a8a9a, art: 'sin_world', music: 'tense', verse: '창세기 6:5', text: '아주 오래전, 사람들은 서로 싸우고 거짓말하고 하나님을 잊어버렸어요. 하나님은 세상을 보시고 마음이 아프셨어요.' },
+      { id: 's2', bg: 0x9ac86a, art: 'land_calm', music: 'desert', verse: '창세기 6:8-10', text: '그런데 하나님과 함께 걸으며 바르게 사는 사람이 있었어요. 바로 노아예요! 노아는 아내, 그리고 세 아들 셈, 함, 야벳과 함께 살았어요.' },
+      { id: 's3', bg: 0x9ac86a, art: 'noah_pray', text: '어느 날, 노아가 하나님께 기도하고 있을 때였어요.' },
+      { id: 'god1', bg: 0x9ac86a, art: 'god_noah', music: 'holy', speaker: '하나님', verse: '창세기 6:13', text: '"노아야, 세상이 나쁜 일로 가득 찼구나. 내가 큰물로 세상을 깨끗하게 하겠다. 하지만 너와 네 가족은 내가 지켜 주겠다."' },
+      { id: 'c1', bg: 0x9ac86a, art: 'noah_pray', speaker: '노아', text: '하나님이 큰 일을 맡기셨어요. 노아는 뭐라고 대답했을까요?',
+        choices: [
+          { text: '🙏 "네, 하나님. 말씀하신 대로 하겠습니다" (믿음 +1)', next: 'god2', effects: { faith: 1 } },
+          { text: '💭 "하나님, 어떻게 하면 되는지 자세히 알려 주세요" (지혜 +1)', next: 'god2', effects: { wisdom: 1 } },
+        ] },
+      { id: 'god2', bg: 0x9ac86a, art: 'ark_plan', speaker: '하나님', verse: '창세기 6:14-16', text: '"잣나무로 아주 큰 배, 방주를 만들어라. 방을 여러 칸 만들고, 물이 새지 않게 안팎에 끈끈한 역청을 발라라."' },
+      { id: 'god3', bg: 0x9ac86a, art: 'ark_plan', speaker: '하나님', verse: '창세기 6:19-21', text: '"그리고 모든 동물을 암컷과 수컷 한 쌍씩 방주에 태워라. 너희와 동물들이 먹을 음식도 가득 실어라."' },
+      { id: 's4', bg: 0x9ac86a, art: 'logs_pile', music: 'desert', verse: '창세기 6:22', text: '노아는 하나님이 말씀하신 대로 그대로 했어요. 아들들과 함께 숲으로 가서 방주를 지을 나무를 모으기 시작했어요.' },
+      { id: 'm1', bg: 0x9ac86a, art: 'forest', text: '튼튼한 나무를 모아 봐요!',
+        minigame: { kind: 'tap', title: '나무 모으기', prompt: '숲에서 방주를 지을 나무를 눌러서 모아요! 돌멩이는 누르면 안 돼요! (10개)', icon: '🌳', bad: '🪨', art: 'forest', goal: 10, time: 22, mood: 'desert', win: 'built1', bg: 0x9ac86a } },
+      { id: 'built1', bg: 0x9ac86a, art: 'logs_pile', sfx: 'chime', text: '나무가 산처럼 쌓였어요! 이제 하나님이 알려 주신 대로 방주를 지어 볼까요?' },
+      { id: 'm2', bg: 0x9ac86a, art: 'ark_build', text: '방주를 짓는 차례를 떠올려 봐요!',
+        minigame: { kind: 'sequence', title: '방주 짓기 순서', prompt: '방주를 짓는 순서대로 눌러요!', icon: '🔨', art: 'ark_build', bg: 0x9ac86a, win: 'mock',
+          steps: ['🙏 하나님이 알려 주신 대로 설계를 떠올려요', '🌳 튼튼한 나무를 베어 와요', '🔨 나무로 몸통과 방들을 만들어요', '🖌️ 물이 새지 않게 역청을 발라요'] } },
+      { id: 'mock', bg: 0x9ac86a, art: 'ark_mock', music: 'tense', speaker: '사람들', verse: '창세기 6:22', text: '"비도 안 오는데 땅 위에 큰 배를 만들다니! 노아는 이상해! 하하하!" 사람들이 노아를 놀렸어요.' },
+      { id: 'c2', bg: 0x9ac86a, art: 'ark_mock', speaker: '노아', text: '놀림을 받아도 노아는 방주 짓기를 멈추지 않았어요. 노아는 어떤 마음이었을까요?',
+        choices: [
+          { text: '💪 놀려도 신경 쓰지 않고 끝까지 짓는다 (용기 +1)', next: 'm3', effects: { courage: 1 } },
+          { text: '🙏 하나님이 하라고 하셨으니 기도하며 믿고 짓는다 (믿음 +1)', next: 'm3', effects: { faith: 1 } },
+        ] },
+      { id: 'm3', bg: 0x9ac86a, art: 'ark_build', music: 'desert', text: '이제 망치로 쿵쿵! 방주를 완성해 봐요.',
+        minigame: { kind: 'timing', title: '방주 짓기', prompt: '표시가 초록 칸에 있을 때 "망치질!"을 눌러요 (4번)', icon: '🔨', art: 'ark_build', fig: 'noah', btn: '🔨 망치질!', goal: 4, mood: 'desert', win: 'done', bg: 0x9ac86a } },
+      { id: 'done', bg: 0x9ac86a, art: 'ark_done', music: 'triumph', sfx: 'win', verse: '창세기 6:22', text: '오랜 시간이 걸렸지만 마침내 방주가 완성되었어요! 노아와 가족은 하나님의 말씀을 믿고 끝까지 순종했어요.', effects: { faith: 1, courage: 1 } },
+      { id: 'end', bg: 0x9ac86a, art: 'ark_done', speaker: '노아', text: '이제 하나님이 약속하신 일이 시작될 거예요. 방주 앞에서는 어떤 신기한 일이 벌어질까요?', endChapter: true },
+    ],
+  },
+  {
+    id: 2, title: '방주 안으로', verse: '창세기 7장', start: 'start',
+    nodes: [
+      { id: 'start', bg: 0x9ac86a, art: 'door_closed', music: 'holy', speaker: '하나님', verse: '창세기 7:1-4', text: '"노아야, 네 가족과 함께 방주로 들어가거라. 이레 뒤에 내가 땅에 비를 내리겠다. 사십 일 동안 밤낮으로 비가 올 것이다."' },
+      { id: 's2', bg: 0x9ac86a, art: 'animals_come', music: 'desert', sfx: 'whoosh', verse: '창세기 7:8-9', text: '그러자 신기한 일이 벌어졌어요! 사자, 코끼리, 기린, 토끼… 모든 동물들이 둘씩 짝을 지어 방주로 걸어왔어요.' },
+      { id: 'm1', bg: 0x9ac86a, art: 'animal_field', text: '동물들이 줄지어 와요. 방주 안으로 안내해 줘요!',
+        minigame: { kind: 'tap', title: '동물 안내하기', prompt: '방주로 걸어오는 동물들을 눌러서 안으로 안내해요! (12마리)', icon: '🦁', icons: ['🦁', '🐘', '🐰', '🦒'], art: 'animal_field', goal: 12, time: 24, mood: 'desert', win: 'enter', bg: 0x9ac86a } },
+      { id: 'enter', bg: 0x9ac86a, art: 'family_enter', sfx: 'chime', verse: '창세기 7:7', text: '노아와 아내, 세 아들과 며느리들도 방주 안으로 들어갔어요. 모두 여덟 사람이었어요.' },
+      { id: 'c1', bg: 0x9ac86a, art: 'family_enter', speaker: '노아', text: '모두가 방주에 탔어요. 이제 문이 닫히기 전, 노아는 무엇을 했을까요?',
+        choices: [
+          { text: '🙏 가족과 함께 하나님께 감사 기도를 드린다 (믿음 +1)', next: 'door', effects: { faith: 1 } },
+          { text: '🤝 모든 동물이 편안한지 하나하나 살펴 준다 (지혜 +1)', next: 'door', effects: { wisdom: 1 } },
+        ] },
+      { id: 'door', bg: 0x9ac86a, art: 'door_closed', music: 'holy', sfx: 'chime', verse: '창세기 7:16', text: '그때 하나님이 직접 방주의 문을 닫아 주셨어요. 이제 모두 안전해요!' },
+      { id: 'rain', bg: 0x5a6a8a, art: 'rain_start', music: 'tense', sfx: 'thunder', verse: '창세기 7:11-12', text: '하늘에서 비가 쏟아지기 시작했어요! 땅속에서도 물이 솟아올랐어요. 비는 사십 일 동안 밤낮으로 내렸어요.' },
+      { id: 'm2', bg: 0x5a6a8a, art: 'rain_start', text: '방주 안으로 물방울이 튀어요! 피해 봐요.',
+        minigame: { kind: 'dodge', title: '거센 빗속에서', prompt: '떨어지는 물방울을 피해서 가족과 동물들을 지켜요! (화면을 눌러 좌우로 움직여요)', icon: '💧', art: 'rain_start', time: 16, mood: 'tense', win: 'water', bg: 0x5a6a8a } },
+      { id: 'water', bg: 0x5a6a8a, art: 'flood', verse: '창세기 7:17-20', text: '물이 점점 불어나 방주가 둥실 떠올랐어요. 높은 산도 물에 잠겼어요. 하지만 방주는 안전하게 물 위를 떠다녔어요.' },
+      { id: 'inside', bg: 0xb8864a, art: 'ark_inside', music: 'night', text: '방주 안은 따뜻하고 안전했어요. 노아는 동물들에게 먹이를 주고, 가족들과 함께 기도했어요.' },
+      { id: 'c2', bg: 0xb8864a, art: 'inside_worry', speaker: '노아', text: '밖에서는 비가 계속 내렸어요. 아이들이 무서워서 노아에게 물었어요. 노아는 어떻게 했을까요?',
+        choices: [
+          { text: '🙏 "하나님이 우리를 꼭 지켜 주신단다" 하고 안아 준다 (믿음 +1)', next: 'long', effects: { faith: 1 } },
+          { text: '🎵 함께 노래를 부르며 마음을 편하게 해 준다 (용기 +1)', next: 'long', effects: { courage: 1 } },
+        ] },
+      { id: 'long', bg: 0x5a6a8a, art: 'flood_calm', music: 'night', verse: '창세기 7:24', text: '물은 백오십 일 동안 땅 위에 가득 차 있었어요. 노아와 가족은 방주 안에서 오래오래 기다렸어요.' },
+      { id: 'remember', bg: 0x7a9ac0, art: 'flood_calm', music: 'holy', speaker: '하나님', verse: '창세기 8:1', text: '하나님은 노아와 방주 안의 모든 동물을 잊지 않으셨어요. 하나님이 바람을 불게 하시자 물이 줄어들기 시작했어요.' },
+      { id: 'stop', bg: 0x9ac0e0, art: 'rain_stop', music: 'desert', sfx: 'chime', verse: '창세기 8:2-3', text: '비가 그치고, 구름 사이로 따뜻한 햇빛이 비쳤어요!' },
+      { id: 'end', bg: 0x9ac0e0, art: 'rain_stop', speaker: '노아', text: '물이 줄어들고 있어요. 노아는 땅이 다 말랐는지 궁금해졌어요.', endChapter: true },
+    ],
+  },
+  {
+    id: 3, title: '무지개 약속', verse: '창세기 8–9장', start: 'start',
+    nodes: [
+      { id: 'start', bg: 0x9ac0e0, art: 'ararat', music: 'desert', verse: '창세기 8:4', text: '방주는 아라랏 산 위에 사뿐히 내려앉았어요. 하지만 땅은 아직 물에 젖어 있었어요.' },
+      { id: 's2', bg: 0x9ac0e0, art: 'dove_fly', verse: '창세기 8:8', text: '노아는 물이 다 말랐는지 알고 싶었어요. 그래서 비둘기를 하늘로 날려 보내기로 했어요.' },
+      { id: 'm1', bg: 0x9ac0e0, art: 'dove_fly', text: '비둘기를 힘차게 날려 보내요!',
+        minigame: { kind: 'timing', title: '비둘기 날리기', prompt: '초록 칸에서 "날리기!"를 눌러 비둘기를 하늘로 날려요 (3번)', icon: '🕊️', art: 'dove_fly', fig: 'noah', btn: '🕊️ 날리기!', goal: 3, mood: 'desert', win: 'dove2', bg: 0x9ac0e0 } },
+      { id: 'dove2', bg: 0x9ac0e0, art: 'dove_fly', verse: '창세기 8:9-10', text: '처음에는 비둘기가 앉을 곳을 찾지 못하고 돌아왔어요. 노아는 이레를 더 기다렸다가 다시 날려 보냈어요.' },
+      { id: 'dove3', bg: 0x9ac0e0, art: 'dove_olive', sfx: 'chime', verse: '창세기 8:11', text: '저녁이 되자 비둘기가 감람나무 새 잎사귀를 물고 돌아왔어요! 물이 줄고 땅에서 나무가 자라고 있다는 뜻이에요.' },
+      { id: 'c1', bg: 0x9ac0e0, art: 'dove_olive', speaker: '노아', text: '다시 이레가 지나 날려 보낸 비둘기는 돌아오지 않았어요. 땅이 마른 것 같아요! 노아는 어떻게 했을까요?',
+        choices: [
+          { text: '⏳ 하나님이 나오라고 말씀하실 때까지 참고 기다린다 (믿음 +1)', next: 'god', effects: { faith: 1 } },
+          { text: '🔍 방주 덮개를 열어 땅을 살펴본다 (지혜 +1)', next: 'god', effects: { wisdom: 1 } },
+        ] },
+      { id: 'god', bg: 0x9ac86a, art: 'dry_land', music: 'holy', speaker: '하나님', verse: '창세기 8:15-17', text: '"노아야, 이제 방주에서 나오너라. 네 가족과 모든 동물을 데리고 나와서, 땅에 가득 퍼져 살아라."' },
+      { id: 'exit', bg: 0x9ac86a, art: 'exit', music: 'triumph', sfx: 'win', verse: '창세기 8:18-19', text: '방주의 문이 열리고, 노아의 가족과 동물들이 한 쌍씩 내려왔어요! 오랜만에 마른 땅을 밟았어요. 모두 신이 났어요.' },
+      { id: 'altar', bg: 0x9ac86a, art: 'altar', music: 'holy', verse: '창세기 8:20', text: '노아는 가장 먼저 돌로 제단을 쌓고, 하나님께 감사의 예배를 드렸어요. 지켜 주셔서 정말 고맙다고요.' },
+      { id: 'promise', bg: 0x9ac86a, art: 'altar_god', speaker: '하나님', verse: '창세기 9:11-13', text: '"내가 너희와 약속하겠다. 다시는 큰물로 세상을 멸하지 않을 것이다. 그 약속의 표로 구름 속에 내 무지개를 두겠다."' },
+      { id: 'rainbow', bg: 0x9ac0e0, art: 'rainbow', music: 'triumph', sfx: 'chime', verse: '창세기 9:14-16', text: '그러자 하늘에 아름다운 무지개가 나타났어요! 무지개를 볼 때마다 하나님이 약속을 기억하신다는 걸 알 수 있어요.' },
+      { id: 'm2', bg: 0x9ac0e0, art: 'rainbow', text: '하나님의 약속 이야기를 순서대로 떠올려 봐요!',
+        minigame: { kind: 'sequence', title: '약속 이야기', prompt: '일어난 순서대로 눌러요!', icon: '🌈', art: 'rainbow', mood: 'holy', bg: 0x9ac0e0, win: 'final',
+          steps: ['🕊️ 비둘기가 감람나무 잎을 물고 와요', '🌳 노아의 가족이 방주에서 나와요', '🙏 노아가 제단에서 하나님께 감사해요', '🌈 하늘에 무지개가 나타나요'] } },
+      { id: 'final', bg: 0x9ac0e0, art: 'rainbow_only', verse: '창세기 9:17', text: '하나님은 약속을 꼭 지키시는 분이에요. 노아처럼 하나님의 말씀을 믿고 따르면, 하나님이 언제나 우리를 지켜 주세요.', effects: { faith: 1, wisdom: 1 } },
+      { id: 'end', bg: 0x9ac0e0, art: 'rainbow_only', speaker: '노아', text: '노아와 가족은 새로운 땅에서 새로운 삶을 시작했어요. 비 온 뒤에 무지개가 뜨면, 하나님의 약속을 떠올려 보세요! (노아 이야기 끝)', endChapter: true },
+    ],
+  },
+];
